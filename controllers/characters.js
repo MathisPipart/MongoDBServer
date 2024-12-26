@@ -5,7 +5,8 @@ function insert(body) {
         const mongoObj = new Model(body);
         mongoObj.save()
             .then(results => {
-                resolve(results);
+                const resultWithVirtuals = results.toObject({ virtuals: true });
+                resolve(resultWithVirtuals);
             })
             .catch(error => {
                 reject(error);
@@ -16,14 +17,22 @@ function insert(body) {
 module.exports.insert = insert;
 
 
+
 function query(body) {
     return new Promise((resolve, reject) => {
         Model.find(body)
             .then(results => {
-                results.forEach((character) => {
-                    character._id = null;
+                const filteredResults = results.map(character => {
+                    const obj = character.toObject({ virtuals: true });
+                    return {
+                        id: obj._id,
+                        first_name: obj.first_name,
+                        family_name: obj.family_name,
+                        dob: obj.dob,
+                        age: obj.age
+                    };
                 });
-                resolve(results);
+                resolve(filteredResults);
             })
             .catch(error => {
                 reject(error);
@@ -32,3 +41,5 @@ function query(body) {
 }
 
 module.exports.query = query;
+
+
