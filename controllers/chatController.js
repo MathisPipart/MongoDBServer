@@ -1,6 +1,6 @@
 const Model = require('../models/chatMessage');
 
-// Fonction pour insérer un message dans MongoDB
+// Function for inserting a message in MongoDB
 function insert(body) {
     return new Promise((resolve, reject) => {
         console.log(`[Chat Controller] Tentative de sauvegarde dans MongoDB avec les données :`, body);
@@ -19,10 +19,10 @@ function insert(body) {
     });
 }
 
-
 module.exports.insert = insert;
 
-// Fonction pour récupérer les messages (historique) d'une room
+
+// Function to retrieve messages (history) from a room
 function query(body) {
     return new Promise((resolve, reject) => {
         console.log(`[Chat Controller] Tentative de recherche dans MongoDB avec le corps :`, body);
