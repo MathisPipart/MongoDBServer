@@ -36,7 +36,6 @@ function query(body) {
                 const filteredResults = results.map(message => {
                     const obj = message.toObject({ virtuals: true });
                     return {
-                        id: obj._id,
                         room: obj.room,
                         userId: obj.userId,
                         message: obj.message,
