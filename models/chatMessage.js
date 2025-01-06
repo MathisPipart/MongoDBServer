@@ -7,4 +7,6 @@ const chatMessageSchema = new mongoose.Schema({
     timestamp: { type: Date, default: Date.now }
 });
 
+chatMessageSchema.index({ timestamp: 1 });
+
 module.exports = mongoose.model('ChatMessage', chatMessageSchema);

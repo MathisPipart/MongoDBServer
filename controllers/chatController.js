@@ -19,20 +19,21 @@ function insert(body) {
     });
 }
 
-module.exports.insert = insert;
-
-
-// Function to retrieve messages (history) from a room
+// Function to retrieve all messages (history) from a room, sorted chronologically
 function query(body) {
     return new Promise((resolve, reject) => {
         console.log(`[Chat Controller] Attempting to search in MongoDB with body:`, body);
+
         Model.find(body)
+            .sort({ timestamp: 1 }) // Sort messages chronologically
             .then(results => {
                 if (results.length === 0) {
                     console.log(`[Chat Controller] No messages found for:`, body);
                 } else {
-                    console.log(`[Chat Controller] Messages retrieved:`, results);
+                    console.log(`[Chat Controller] Messages retrieved:`, results.length);
                 }
+
+                // Map results to include only relevant fields
                 const filteredResults = results.map(message => {
                     const obj = message.toObject({ virtuals: true });
                     return {
@@ -42,6 +43,7 @@ function query(body) {
                         timestamp: obj.timestamp,
                     };
                 });
+
                 resolve(filteredResults);
             })
             .catch(error => {
@@ -51,5 +53,7 @@ function query(body) {
     });
 }
 
-
-module.exports.query = query;
+module.exports = {
+    insert,
+    query,
+};
