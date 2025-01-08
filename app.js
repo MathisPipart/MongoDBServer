@@ -7,7 +7,6 @@ var logger = require('morgan');
 const database = require("./databases/database")
 var usersRouter = require('./routes/users');
 const chatRoutes = require('./routes/chatRoutes');
-const { swaggerUi, swaggerSpec } = require("./swagger/swaggerConfig");
 
 var app = express();
 
@@ -26,8 +25,5 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
 app.use('/chat', chatRoutes);
-
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-console.log("Documentation Swagger disponible sur http://localhost:3000/api-docs");
 
 module.exports = app;
