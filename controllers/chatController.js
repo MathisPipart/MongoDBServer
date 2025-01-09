@@ -1,6 +1,14 @@
+/**
+ * Module dependencies.
+ */
 const Model = require('../models/chatMessage');
 
-// Function for inserting a message in MongoDB
+/**
+ * Inserts a chat message into the MongoDB database.
+ *
+ * @param {Object} body - The chat message data to be saved.
+ * @returns {Promise<Object>} A promise that resolves to the saved chat message with virtual fields included.
+ */
 function insert(body) {
     return new Promise((resolve, reject) => {
         console.log(`[Chat Controller] Attempting to save in MongoDB with data:`, body);
@@ -19,7 +27,13 @@ function insert(body) {
     });
 }
 
-// Function to retrieve all messages (history) from a room, sorted chronologically
+/**
+ * Retrieves all chat messages for a specific room, sorted chronologically.
+ *
+ * @param {Object} body - The query criteria, typically including the room identifier.
+ * @returns {Promise<Array<Object>>} A promise that resolves to an array of chat messages,
+ * each containing room, userId, message, and timestamp fields.
+ */
 function query(body) {
     return new Promise((resolve, reject) => {
         console.log(`[Chat Controller] Attempting to search in MongoDB with body:`, body);
@@ -53,6 +67,9 @@ function query(body) {
     });
 }
 
+/**
+ * Exports the functions for external use.
+ */
 module.exports = {
     insert,
     query,
